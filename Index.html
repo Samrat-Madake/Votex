@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votex - Wireframe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .btn {
+            border-radius: 8px;
+            font-weight: 600;
+            padding: 12px 24px;
+            transition: all 0.2s ease;
+        }
+        .btn-primary {
+            background-color: #2563eb;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #374151;
+        }
+        .btn-secondary:hover {
+            background-color: #d1d5db;
+        }
+        .nav-link {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            color: #4b5563;
+            cursor: pointer;
+        }
+        .nav-link.active {
+            background-color: #e0e7ff;
+            color: #3730a3;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Main Container -->
+    <div id="app-container" class="min-h-screen">
+        <!-- Login Page (Default View) -->
+        <div id="login-page" class="page active">
+            <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+                <div class="w-full max-w-md text-center">
+                    <i class="fas fa-check-to-slot text-5xl text-blue-600"></i>
+                    <h1 class="text-4xl font-bold mt-4">Votex</h1>
+                    <p class="text-gray-600 mt-2 mb-8">Secure & Transparent Campus Elections</p>
+                    
+                    <div class="card p-8">
+                        <h2 class="text-xl font-semibold mb-6">Student Login</h2>
+                        <div class="space-y-4">
+                            <button onclick="showApp('dashboard-page')" class="w-full btn btn-primary flex items-center justify-center">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" class="w-6 h-6 mr-3" alt="MetaMask">
+                                Connect with MetaMask
+                            </button>
+                            <button onclick="showApp('dashboard-page')" class="w-full btn btn-secondary flex items-center justify-center">
+                                <svg class="w-6 h-6 mr-3" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path fill="#0364ff" d="M128 26.31a102.34 102.34 0 0 1 73.5 28.53 6.5 6.5 0 0 1-9.4 9.01A89.34 89.34 0 1 0 63.9 192.1a6.5 6.5 0 0 1 9.4-9.01A89.47 89.47 0 0 0 128 215.34a89.34 89.34 0 0 0 64.1-148.49 6.5 6.5 0 1 1 9.4-9.01A102.34 102.34 0 0 1 128 26.31Z"></path><path fill="#0364ff" d="M168.2 87.8a6.5 6.5 0 0 0-9.2 0l-38.31 38.3-12.82-12.81a6.5 6.5 0 0 0-9.2 9.2l17.42 17.41a6.5 6.5 0 0 0 9.2 0l42.91-42.9a6.5 6.5 0 0 0 0-9.2Z"></path></svg>
+                                Connect with Web3Auth
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-6">By logging in, you agree to our Terms of Service.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App Interface (Hidden by default) -->
+        <div id="main-app" class="hidden">
+            <div class="flex h-screen bg-gray-50">
+                <!-- Sidebar Navigation -->
+                <aside class="w-64 bg-white shadow-md flex flex-col">
+                    <div class="p-6 text-center border-b">
+                        <h1 class="text-2xl font-bold text-blue-600">Votex</h1>
+                    </div>
+                    <nav class="flex-1 p-4 space-y-2">
+                        <a onclick="navigate('dashboard-page')" class="nav-link flex items-center active"><i class="fas fa-home w-6 mr-3"></i> Dashboard</a>
+                        <a onclick="navigate('ballot-page')" class="nav-link flex items-center"><i class="fas fa-check-to-slot w-6 mr-3"></i> Vote Now</a>
+                        <a onclick="navigate('profile-page')" class="nav-link flex items-center"><i class="fas fa-user-shield w-6 mr-3"></i> My Profile</a>
+                        <a onclick="navigate('challenge-page')" class="nav-link flex items-center"><i class="fas fa-gavel w-6 mr-3"></i> Challenge Portal</a>
+                        <a onclick="navigate('admin-page')" class="nav-link flex items-center"><i class="fas fa-user-cog w-6 mr-3"></i> Admin Panel</a>
+                    </nav>
+                    <div class="p-4 border-t">
+                        <button onclick="showLogin()" class="w-full btn btn-secondary text-sm">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Main Content Area -->
+                <main class="flex-1 p-6 lg:p-10 overflow-y-auto">
+                    <!-- Ballot Page -->
+                    <div id="ballot-page" class="page">
+                        <h2 class="text-3xl font-bold mb-2">Student Council President Election</h2>
+                        <p class="text-gray-500 mb-8">Select one candidate and cast your vote. Your choice is final.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="candidate-list">
+                            <!-- Candidates will be injected here -->
+                        </div>
+                        <div class="mt-8 flex justify-center">
+                            <button id="cast-vote-btn" onclick="showConfirmationModal()" class="btn btn-primary text-lg disabled:bg-gray-400 disabled:cursor-not-allowed" disabled>
+                                <i class="fas fa-paper-plane mr-2"></i> Cast Your Vote
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Results Dashboard Page -->
+                    <div id="dashboard-page" class="page">
+                        <h2 class="text-3xl font-bold mb-2">Live Election Results</h2>
+                        <p class="text-gray-500 mb-8">Results for the Student Council President Election.</p>
+                        <div class="card p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-semibold">Vote Distribution</h3>
+                                <span class="text-sm font-medium text-green-600 bg-green-100 px-3 py-1 rounded-full flex items-center"><div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>LIVE</span>
+                            </div>
+                            <div class="w-full h-72 bg-gray-50 rounded-lg p-4">
+                                <!-- Chart.js canvas would go here. This is a placeholder. -->
+                                <div class="h-full flex items-end space-x-4 justify-center">
+                                    <div class="text-center">
+                                        <div class="h-48 w-16 bg-blue-500 rounded-t-md" style="height: 60%;"></div>
+                                        <p class="text-sm mt-2 font-medium">Alice</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="h-48 w-16 bg-blue-500 rounded-t-md" style="height: 85%;"></div>
+                                        <p class="text-sm mt-2 font-medium">Bob</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="h-48 w-16 bg-blue-500 rounded-t-md" style="height: 40%;"></div>
+                                        <p class="text-sm mt-2 font-medium">Charlie</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6 border-t pt-4">
+                                <div class="flex justify-between items-center mb-2 text-lg">
+                                    <span class="font-bold">Total Votes Cast:</span>
+                                    <span class="font-bold text-blue-600">1,845</span>
+                                </div>
+                                <ul class="space-y-2 mt-4">
+                                    <li class="flex justify-between items-center p-2 rounded-md bg-gray-50"><span>Bob Johnson</span><span class="font-semibold">988 Votes</span></li>
+                                    <li class="flex justify-between items-center p-2 rounded-md bg-gray-50"><span>Alice Williams</span><span class="font-semibold">652 Votes</span></li>
+                                    <li class="flex justify-between items-center p-2 rounded-md bg-gray-50"><span>Charlie Davis</span><span class="font-semibold">205 Votes</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Civic Score Profile Page -->
+                    <div id="profile-page" class="page">
+                        <h2 class="text-3xl font-bold mb-8">My Civic Profile</h2>
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div class="lg:col-span-1">
+                                <div class="card p-6 text-center">
+                                    <img src="https://placehold.co/128x128/e0e7ff/3730a3?text=A" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white shadow-lg">
+                                    <h3 class="text-2xl font-bold">Alex Doe</h3>
+                                    <p class="text-gray-500 text-sm truncate">0x1234...abcd</p>
+                                    <div class="mt-6 bg-blue-50 p-4 rounded-lg">
+                                        <p class="text-sm font-semibold text-blue-800">CIVIC SCORE</p>
+                                        <p class="text-4xl font-bold text-blue-600">850</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-2">
+                                <div class="card p-6">
+                                    <h3 class="text-xl font-semibold mb-4">My Soulbound NFT Badges</h3>
+                                    <p class="text-gray-500 mb-6">These non-transferable NFTs represent your participation in campus governance.</p>
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                                        <div class="text-center">
+                                            <div class="p-3 bg-gray-100 rounded-xl shadow-inner">
+                                                <i class="fas fa-award text-5xl text-yellow-500"></i>
+                                            </div>
+                                            <p class="text-xs font-semibold mt-2">Presidential Election '25</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="p-3 bg-gray-100 rounded-xl shadow-inner">
+                                                <i class="fas fa-award text-5xl text-slate-400"></i>
+                                            </div>
+                                            <p class="text-xs font-semibold mt-2">Library Referendum '25</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="p-3 bg-gray-100 rounded-xl shadow-inner">
+                                                <i class="fas fa-award text-5xl text-yellow-500"></i>
+                                            </div>
+                                            <p class="text-xs font-semibold mt-2">Student Council '24</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="p-3 bg-gray-100 rounded-xl shadow-inner">
+                                                <i class="fas fa-award text-5xl text-amber-700"></i>
+                                            </div>
+                                            <p class="text-xs font-semibold mt-2">Club Elections '24</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Admin Panel Page -->
+                    <div id="admin-page" class="page">
+                        <h2 class="text-3xl font-bold mb-8">Admin Panel</h2>
+                        <div class="space-y-10">
+                            <div class="card p-6">
+                                <h3 class="text-xl font-semibold mb-4">Create New Election</h3>
+                                <form class="space-y-4">
+                                    <div>
+                                        <label for="election-title" class="block text-sm font-medium text-gray-700">Election Title</label>
+                                        <input type="text" id="election-title" placeholder="e.g., Student Council President" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label for="start-date" class="block text-sm font-medium text-gray-700">Start Date</label>
+                                            <input type="date" id="start-date" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                        </div>
+                                        <div>
+                                            <label for="end-date" class="block text-sm font-medium text-gray-700">End Date</label>
+                                            <input type="date" id="end-date" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                        </div>
+                                    </div>
+                                    <div class="pt-2">
+                                        <button type="submit" class="btn btn-primary">Deploy Election Contract</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card p-6">
+                                <h3 class="text-xl font-semibold mb-4">Manage Voters</h3>
+                                <p class="text-gray-500 mb-4">Upload a list of eligible student wallet addresses to whitelist them for an election.</p>
+                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                                    <i class="fas fa-file-csv text-4xl text-gray-400 mb-4"></i>
+                                    <p class="font-semibold">Drag & drop a .csv file here</p>
+                                    <p class="text-sm text-gray-500">or</p>
+                                    <button class="text-blue-600 font-semibold mt-2">Browse files</button>
+                                    <input type="file" class="hidden">
+                                </div>
+                                <div class="pt-4">
+                                    <button class="btn btn-secondary">Upload Voter List</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Challenge Portal Page -->
+                    <div id="challenge-page" class="page">
+                         <h2 class="text-3xl font-bold mb-8">Challenge Portal</h2>
+                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div class="card p-6">
+                                <h3 class="text-xl font-semibold mb-4">Submit a Dispute</h3>
+                                <form class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Election in Question</label>
+                                        <select class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                            <option>Student Council President Election '25</option>
+                                            <option>Library Referendum '25</option>
+                                        </select>
+                                    </div>
+                                     <div>
+                                        <label class="block text-sm font-medium text-gray-700">Nature of Challenge</label>
+                                        <input type="text" placeholder="e.g., Suspected vote tampering" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Detailed Explanation & Evidence</label>
+                                        <textarea rows="4" placeholder="Provide a detailed explanation and any relevant transaction hashes or links." class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
+                                    </div>
+                                    <div class="pt-2">
+                                        <button type="submit" class="btn btn-primary">Submit Challenge</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card p-6">
+                                <h3 class="text-xl font-semibold mb-4">Ongoing & Resolved Challenges</h3>
+                                <div class="space-y-4">
+                                    <div class="p-4 rounded-lg bg-yellow-50 border border-yellow-200">
+                                        <p class="font-semibold text-yellow-800">Tally Mismatch - Library Referendum '25</p>
+                                        <p class="text-sm text-yellow-700">Status: Under Review</p>
+                                    </div>
+                                    <div class="p-4 rounded-lg bg-green-50 border border-green-200">
+                                        <p class="font-semibold text-green-800">Ineligible Voter - Club Elections '24</p>
+                                        <p class="text-sm text-green-700">Status: Resolved - No action needed</p>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="modal-backdrop hidden">
+        <div class="card w-full max-w-md p-8 text-center transform transition-all scale-95 opacity-0" id="modal-content">
+            <div class="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center mb-5">
+                <i class="fas fa-check text-3xl text-green-600"></i>
+            </div>
+            <h2 class="text-2xl font-bold">Vote Cast Successfully!</h2>
+            <p class="text-gray-500 mt-2">Your vote has been securely recorded on the blockchain.</p>
+            <div class="mt-6 bg-gray-50 p-4 rounded-lg text-left">
+                <p class="text-sm font-semibold text-gray-700">Transaction Hash:</p>
+                <a href="#" class="text-sm text-blue-600 truncate block hover:underline">0xabc...def123</a>
+            </div>
+            <div class="mt-6">
+                <h3 class="font-semibold">You've earned a new badge!</h3>
+                <div class="mt-3 inline-block">
+                    <div class="p-4 bg-gray-100 rounded-xl shadow-inner">
+                        <i class="fas fa-award text-6xl text-yellow-500"></i>
+                    </div>
+                    <p class="text-sm font-semibold mt-2">Presidential Election '25</p>
+                </div>
+            </div>
+            <button onclick="hideConfirmationModal()" class="btn btn-primary w-full mt-8">Done</button>
+        </div>
+    </div>
+
+    <script>
+        const candidates = [
+            { name: 'Alice Williams', major: 'Computer Science', img: 'https://placehold.co/100x100/dbeafe/3b82f6?text=A' },
+            { name: 'Bob Johnson', major: 'Political Science', img: 'https://placehold.co/100x100/d1fae5/059669?text=B' },
+            { name: 'Charlie Davis', major: 'Economics', img: 'https://placehold.co/100x100/fee2e2/dc2626?text=C' }
+        ];
+
+        let selectedCandidate = null;
+
+        function renderCandidates() {
+            const list = document.getElementById('candidate-list');
+            list.innerHTML = '';
+            candidates.forEach((c, index) => {
+                const card = document.createElement('div');
+                card.className = 'card p-4 text-center cursor-pointer border-2 border-transparent';
+                card.id = `candidate-${index}`;
+                card.onclick = () => selectCandidate(index);
+                card.innerHTML = `
+                    <img src="${c.img}" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-white shadow-lg">
+                    <h3 class="text-lg font-bold">${c.name}</h3>
+                    <p class="text-gray-500 text-sm">${c.major}</p>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function selectCandidate(index) {
+            selectedCandidate = index;
+            document.querySelectorAll('#candidate-list > div').forEach(el => {
+                el.classList.remove('border-blue-500', 'ring-2', 'ring-blue-300');
+            });
+            document.getElementById(`candidate-${index}`).classList.add('border-blue-500', 'ring-2', 'ring-blue-300');
+            document.getElementById('cast-vote-btn').disabled = false;
+        }
+        
+        function showApp(startPage) {
+            document.getElementById('login-page').classList.remove('active');
+            document.getElementById('main-app').classList.remove('hidden');
+            navigate(startPage);
+        }
+
+        function showLogin() {
+            document.getElementById('login-page').classList.add('active');
+            document.getElementById('main-app').classList.add('hidden');
+        }
+
+        function navigate(pageId) {
+            document.querySelectorAll('#main-app .page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            document.querySelector(`.nav-link[onclick="navigate('${pageId}')"]`).classList.add('active');
+        }
+
+        function showConfirmationModal() {
+            const modal = document.getElementById('confirmation-modal');
+            const content = document.getElementById('modal-content');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+            }, 10);
+        }
+
+        function hideConfirmationModal() {
+            const modal = document.getElementById('confirmation-modal');
+            const content = document.getElementById('modal-content');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                navigate('dashboard-page');
+            }, 200);
+        }
+
+        // Initial setup
+        window.onload = () => {
+            renderCandidates();
+            // Default to showing the login page first
+            document.getElementById('main-app').classList.add('hidden');
+            document.getElementById('login-page').classList.add('active');
+        };
+    </script>
+</body>
+</html>
